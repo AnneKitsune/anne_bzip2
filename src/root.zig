@@ -31,6 +31,14 @@ pub fn decompress(allocator: std.mem.Allocator, reader: *std.Io.Reader, writer: 
     return total;
 }
 
+/// Wrapping the internal error message since we use the no-std mode of bzip2.
+/// Required to avoid a linker error.
+export fn bz_internal_error(errcode: c_int) void {
+    var msg: [128]u8 = undefined;
+    const msg_formatted = std.fmt.bufPrint(msg[0..], "Received bzip2 internal error code: {}", .{errcode}) catch {return;};
+    @panic(msg_formatted);
+}
+
 test "import" {
     _ = @import("tests.zig");
 }

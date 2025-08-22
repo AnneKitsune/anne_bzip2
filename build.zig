@@ -4,28 +4,15 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    //    const libbz2_mod = b.createModule(.{
-    //        .target = target,
-    //        .optimize = optimize,
-    //        .link_libc = true,
-    //    });
-    //const libbz2 = b.addLibrary(.{
-    //.name = "bz2",
-    //.root_module = libbz2_mod,
-    //});
-    //const libbz2 = b.addObject(.{
-    //.name = "bz2",
-    //.root_module = libbz2_mod,
-    //});
-    //b.installArtifact(libbz2);
-
-    const header_mod = b.addTranslateC(.{
+    // generate zig-compatible bzip2 header
+    const header = b.addTranslateC(.{
         .root_source_file = b.path("bzip2/bzlib.h"),
         .target = target,
         .optimize = optimize,
-    }).createModule();
-    //header_mod.linkLibrary(libbz2_mod);
+    });
+    const header_mod = header.createModule();
 
+    // create main mod file
     const mod = b.addModule("anne_bzip2", .{
         .root_source_file = b.path("src/root.zig"),
         .target = target,
@@ -34,6 +21,7 @@ pub fn build(b: *std.Build) void {
             .{ .name = "bzip2", .module = header_mod },
         },
     });
+    // ... with the bzip2 implementation integrated to it
     mod.addCSourceFiles(.{
         .files = &.{
             "bzip2/blocksort.c",
@@ -49,19 +37,19 @@ pub fn build(b: *std.Build) void {
             "-Winline",
             "-g",
             "-D_FILE_OFFSET_BITS=64",
-            //"-DBZ_NO_STDIO",
+            "-DBZ_NO_STDIO",
         },
         .language = .c,
     });
-    mod.addIncludePath(b.path("bzip2"));
-    //mod.linkLibrary(libbz2);
-    //mod.addObject(libbz2);
 
-    //const lib = b.addLibrary(.{
-    //.name = "anne_bzip2",
-    //.root_module = mod,
-    //});
+    // Create the static library users can link against
+    const lib = b.addLibrary(.{
+        .name = "anne_bzip2",
+        .root_module = mod,
+    });
+    lib.step.dependOn(&header.step);
 
+    // unit tests
     const mod_tests = b.addTest(.{
         .root_module = mod,
     });
