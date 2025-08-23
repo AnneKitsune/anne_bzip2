@@ -1,6 +1,6 @@
 .{
     .name = .anne_bzip2,
-    .version = "1.1.0",
+    .version = "1.2.0",
     .minimum_zig_version = "0.15.0-dev.1380+e98aeeb73",
     .fingerprint = 0xefa78aebfc80a2a2,
     .dependencies = .{
