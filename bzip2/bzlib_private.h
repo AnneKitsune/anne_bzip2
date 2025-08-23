@@ -22,9 +22,9 @@
 #ifndef _BZLIB_PRIVATE_H
 #define _BZLIB_PRIVATE_H
 
-#include <stdlib.h>
 
 #ifndef BZ_NO_STDIO
+#include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
