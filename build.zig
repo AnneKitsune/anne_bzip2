@@ -10,6 +10,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+    header.defineCMacro("BZ_NO_STDIO", null);
     const header_mod = header.createModule();
 
     // create main mod file
