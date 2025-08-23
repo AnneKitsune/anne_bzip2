@@ -1,8 +1,8 @@
 .{
     .name = .anne_bzip2,
-    .version = "1.3.0",
+    .version = "1.4.0",
     .minimum_zig_version = "0.15.0-dev.1380+e98aeeb73",
     .fingerprint = 0xefa78aebfc80a2a2,
     .dependencies = .{},
-    .paths = .{ "build.zig", "build.zig.zon", "src/root.zig", "src/allocator_wrapper.zig", "src/compressor.zig", "src/decompressor.zig", "LICENSE", "README.md" },
+    .paths = .{ "build.zig", "build.zig.zon", "src/root.zig", "src/allocator_wrapper.zig", "src/compressor.zig", "src/decompressor.zig", "LICENSE", "README.md", "bzip2" },
 }
