@@ -1,11 +1,11 @@
-/// The bzip2 compressor/decompressor ported to zig.
-/// We wrap over the original C files into a convenient zig module.
-/// Running the compressor requires a minimum of ~4.2MB of memory available in the allocator passed to it.
-/// # Uses
-/// For simple uses, the `compress` and `decompress` functions should be entirely sufficient. They automatically stream data from the input reader to the output writer.
-///
-/// For more advanced uses, `Bzip2StreamCompressor` and `Bzip2StreamDecompressor` are available.
-/// However, we recommend against using them directly due to their complexity and the apparent lack of advantages in using the lower level interfaces.
+//! The bzip2 compressor/decompressor ported to zig.
+//! We wrap over the original C files into a convenient zig module.
+//! Running the compressor requires a minimum of ~4.2MB of memory available in the allocator passed to it.
+//! # Uses
+//! For simple uses, the `compress` and `decompress` functions should be entirely sufficient. They automatically stream data from the input reader to the output writer.
+//!
+//! For more advanced uses, `Bzip2StreamCompressor` and `Bzip2StreamDecompressor` are available.
+//! However, we recommend against using them directly due to their complexity and the apparent lack of advantages in using the lower level interfaces.
 const std = @import("std");
 
 pub const Bzip2StreamCompressor = @import("compressor.zig").Bzip2StreamCompressor;
