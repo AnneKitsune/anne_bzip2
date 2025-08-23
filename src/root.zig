@@ -35,7 +35,9 @@ pub fn decompress(allocator: std.mem.Allocator, reader: *std.Io.Reader, writer: 
 /// Required to avoid a linker error.
 export fn bz_internal_error(errcode: c_int) void {
     var msg: [128]u8 = undefined;
-    const msg_formatted = std.fmt.bufPrint(msg[0..], "Received bzip2 internal error code: {}", .{errcode}) catch {return;};
+    const msg_formatted = std.fmt.bufPrint(msg[0..], "Received bzip2 internal error code: {}", .{errcode}) catch {
+        return;
+    };
     @panic(msg_formatted);
 }
 
